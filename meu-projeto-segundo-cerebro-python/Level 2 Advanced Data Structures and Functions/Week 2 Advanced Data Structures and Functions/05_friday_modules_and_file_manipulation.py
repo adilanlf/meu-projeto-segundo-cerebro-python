@@ -36,8 +36,8 @@ def greet(name):                                 # Defines a greeting function
     return f"Hello, {name}!"                     # Returns the greeting message
 # Now use this module in another file:
 # main.py
-#import utils                                     # Imports our custom utils module
-#print(utils.greet("Lucas"))                      # Calls the greet function
+#import utils                                     # Imports our custom utils module (código comentado para nao dar erro)
+#print(utils.greet("Lucas"))                      # Calls the greet function        (código comentado para nao dar erro)
 # Output: Hello, Lucas!
 # Note: Ensure that utils.py is in the same directory as main.py or in the Python path.
 
