@@ -66,7 +66,7 @@ alice = SavingsAccount("Alice", 200)                     # Savings account
 
 # Operations
 john.deposit(50)                                         # Deposit to John's account
-john.withdraw(30)                                        # Withdraw from John's account (with fee)
+john.withdraw(30)                                        # Withdraw from John's account  (with fee)
 alice.apply_interest()                                   # Apply interest to Alice's account
 john.transfer(50, alice)                                 # Transfer from John to Alice
 print(john)                                              # Print John's account info
