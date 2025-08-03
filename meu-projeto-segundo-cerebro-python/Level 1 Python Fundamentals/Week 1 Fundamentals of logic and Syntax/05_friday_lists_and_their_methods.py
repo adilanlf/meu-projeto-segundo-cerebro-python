@@ -76,7 +76,7 @@ print(person["city"])  # Output: São Paulo
 person["email"] = "lucas@example.com"
 
 print(person)
-# Output: {'name': 'Lucas', 'age': 25, 'city': 'São Paulo', 'email': 'lucas@example.com'}
+# Output: {'name': 'Lucas', 'age': 25, 'city': 'São Paulo', 'email': 'lucas@example.com'} 
 
 
 
