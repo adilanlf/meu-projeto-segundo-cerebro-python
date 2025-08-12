@@ -20,3 +20,43 @@ def home():
 # debug=True enables auto-reload and shows detailed error pages
 if __name__ == "__main__":  
     app.run(debug=True)
+
+
+## 1. Install Flask (only once)
+##pip install flask (remove ## when running the command)
+
+# 2. Run the file
+##python app.py (remove ## when running the command)
+
+# 3. Open your browser and go to:
+##http://127.0.0.1:5000/ (remove ## when running the command)
+
+
+
+
+# Output in browser:
+# Hello, World!
+
+
+
+# Console output when running the server:
+# * Serving Flask app 'app'
+# * Debug mode: on
+# * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+
+
+
+
+
+# --------------------------------------------
+# SUMMARY:
+# - Imported Flask and created an app instance
+# - Defined a route ("/") and a function to return "Hello, World!"
+# - Ran the Flask development server in debug mode
+
+# TIPS & BEST PRACTICES:
+# 1. Always use `debug=True` only in development, never in production.
+# 2. Use clear function names for routes (e.g., home, about, contact).
+# 3. Keep routes organized in separate files for bigger projects.
+# 4. Use environment variables for configuration (e.g., port, debug mode).
+# --------------------------------------------
