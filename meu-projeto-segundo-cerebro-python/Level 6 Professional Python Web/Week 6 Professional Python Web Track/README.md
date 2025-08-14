@@ -16,9 +16,9 @@ Primeira rota / retornando "Hello, World!"
 
 Executar servidor local (python app.py)
 
-Exemplo de código:
+### Exemplo de código:
 
-from flask import Flask  # Import Flask
+```from flask import Flask  # Import Flask
 
 app = Flask(__name__)   # Create Flask app instance
 
@@ -28,6 +28,11 @@ def home():
 
 if __name__ == "__main__":
     app.run(debug=True)  # Run server in debug mode
+```
+<br>
+
+
+<br>
 
 ## Terça-feira – Rotas e Templates
 
@@ -41,9 +46,9 @@ Templates com Jinja2
 
 Estrutura de pastas: templates/ e static/
 
-Exemplo de código:
+### Exemplo de código:
 
-@app.route("/hello/<name>")                 # Route with variable
+```@app.route("/hello/<name>")                 # Route with variable
 def hello(name):
     return render_template("hello.html", name=name)  # Pass variable to template
 
@@ -51,6 +56,10 @@ def hello(name):
 Template hello.html:
 
 <h1>Hello, {{ name }}!</h1>  <!-- Display variable from Python -->
+```
+<br>
+
+<br>
 
 ## Quarta-feira – Formulários e Entrada de Dados
 
@@ -64,14 +73,18 @@ Validação básica
 
 Exibição de respostas personalizadas
 
-Exemplo de código:
+### Exemplo de código:
 
-@app.route("/form", methods=["GET", "POST"])
+```@app.route("/form", methods=["GET", "POST"])
 def form():
     if request.method == "POST":                # Check if form submitted
         name = request.form.get("name")        # Get input value
         return f"Hello {name}!"                # Return personalized message
     return render_template("form.html")        # Render form page
+```
+<br>
+
+<br>
 
 ## Quinta-feira – Conexão com Banco de Dados
 
@@ -85,14 +98,18 @@ Inserção, consulta e listagem de dados
 
 Exibição em páginas HTML
 
-Exemplo de código:
+### Exemplo de código:
 
-import sqlite3
+```import sqlite3
 
 def get_db_connection():
     conn = sqlite3.connect("users.db")  # Connect to database
     conn.row_factory = sqlite3.Row       # Access rows by column name
     return conn
+```
+<br>
+
+<br>
 
 ## Sexta-feira – CRUD Completo
 
@@ -106,12 +123,16 @@ Interface simples para gerenciar registros
 
 Boas práticas em rotas e banco
 
-Exemplo de código:
+### Exemplo de código:
 
-@app.route("/edit/<int:id>", methods=["GET","POST"])
+```@app.route("/edit/<int:id>", methods=["GET","POST"])
 def edit(id):
     # Logic to update record
     pass
+```
+<br>
+
+<br>
 
 ## Sábado – Layout e Finalização
 
@@ -125,10 +146,14 @@ Melhorada a responsividade
 
 Revisão do código e testes
 
-Exemplo de código:
+### Exemplo de código:
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+```<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <nav class="navbar navbar-dark bg-dark">...</nav>
+```
+<br>
+
+<br>
 
 ## Domingo – Entrega Final e Testes Finais
 
@@ -152,7 +177,7 @@ templates/index.html → Lista de usuários + formulário
 
 templates/edit.html → Formulário de edição
 
-Exemplo de uso:
+### Exemplo de uso:
 
 Acessar http://127.0.0.1:5000/
 
