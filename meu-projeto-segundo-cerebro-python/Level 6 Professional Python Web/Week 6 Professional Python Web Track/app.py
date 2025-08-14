@@ -1,63 +1,117 @@
-# Monday – Web Environment Configuration
 # --------------------------------------------
-# Flask Basic Setup - First Route Example
+# Flask Final Project: CRUD + Forms + Layout
 # --------------------------------------------
 
-# Importing Flask from the flask package
-from flask import Flask  
+from flask import Flask, request, render_template, redirect, url_for
+import sqlite3
 
-# Creating the Flask application instance
-# __name__ tells Flask where to look for resources
-app = Flask(__name__)  
+app = Flask(__name__)
 
-# Defining a route for the home page ("/")
-# The function below will run when someone accesses the home page
-@app.route("/")  
-def home():
-    # This will be the response shown in the browser
-    return "Hello, World!"  
+# ------------------ DATABASE CONNECTION ------------------
+def get_db_connection():
+    conn = sqlite3.connect("final.db")     # Connect to database
+    conn.row_factory = sqlite3.Row         # Access rows by column name
+    return conn
 
-# Running the Flask development server
-# debug=True enables auto-reload and shows detailed error pages
-if __name__ == "__main__":  
-    app.run(debug=True)
+# ------------------ INITIAL DATABASE SETUP ------------------
+def init_db():
+    conn = get_db_connection()
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL
+        )
+    """)  # Create table if it doesn't exist
+    conn.commit()
+    conn.close()
+
+# ------------------ READ & CREATE ------------------
+@app.route("/", methods=["GET", "POST"])
+def index():
+    conn = get_db_connection()
+
+    if request.method == "POST":
+        name = request.form.get("name")
+        email = request.form.get("email")
+
+        if not name or not email:  # Input validation
+            users = conn.execute("SELECT * FROM users").fetchall()
+            conn.close()
+            return render_template("index.html", users=users, error="Fill all fields!")
+
+        # Insert new user
+        conn.execute("INSERT INTO users (name, email) VALUES (?, ?)", (name, email))
+        conn.commit()
+
+    users = conn.execute("SELECT * FROM users").fetchall()
+    conn.close()
+    return render_template("index.html", users=users)
+
+# ------------------ UPDATE ------------------
+@app.route("/edit/<int:user_id>", methods=["GET", "POST"])
+def edit(user_id):
+    conn = get_db_connection()
+
+    if request.method == "POST":
+        name = request.form.get("name")
+        email = request.form.get("email")
+
+        conn.execute("UPDATE users SET name=?, email=? WHERE id=?", (name, email, user_id))
+        conn.commit()
+        conn.close()
+        return redirect(url_for("index"))
+
+    user = conn.execute("SELECT * FROM users WHERE id=?", (user_id,)).fetchone()
+    conn.close()
+    return render_template("edit.html", user=user)
+
+# ------------------ DELETE ------------------
+@app.route("/delete/<int:user_id>")
+def delete(user_id):
+    conn = get_db_connection()
+    conn.execute("DELETE FROM users WHERE id=?", (user_id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for("index"))
+
+# ------------------ RUN APP ------------------
+if __name__ == "__main__":
+    init_db()               # Ensure database and table exist
+    app.run(debug=True)     # Run server in debug mode
 
 
-## 1. Install Flask (only once)
-##pip install flask (remove ## when running the command)
-
-# 2. Run the file
-##python app.py (remove ## when running the command)
-
-# 3. Open your browser and go to:
-##http://127.0.0.1:5000/ (remove ## when running the command)
 
 
 
 
-# Output in browser:
-# Hello, World!
+#how to run:
+#python app.py
 
 
-
-# Console output when running the server:
-# * Serving Flask app 'app'
-# * Debug mode: on
-# * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-
+#acess:
+#http://127.0.0.1:5000/ → Form + list of users
+#Add, Edit, Delete users in one interface
+#Works on mobile and desktop (Bootstrap layout)
 
 
+#Example Browser Output:
+#Home page with navbar, form, table of users
+#Edit page with pre-filled form
+#Delete confirmation pop-up
 
 
 # --------------------------------------------
 # SUMMARY:
-# - Imported Flask and created an app instance
-# - Defined a route ("/") and a function to return "Hello, World!"
-# - Ran the Flask development server in debug mode
-
-# TIPS & BEST PRACTICES:
-# 1. Always use `debug=True` only in development, never in production.
-# 2. Use clear function names for routes (e.g., home, about, contact).
-# 3. Keep routes organized in separate files for bigger projects.
-# 4. Use environment variables for configuration (e.g., port, debug mode).
+# - Integrated Flask CRUD, forms, SQLite, and Bootstrap layout
+# - Created reusable layout template for all pages
+# - Input validation with basic error messages
+# - Added responsive design for mobile and desktop
+#
+# TIPS:
+# - Always validate user inputs before database operations
+# - Use Bootstrap classes for consistent UI and responsiveness
+# - Confirm deletion actions to prevent data loss
+# - Keep templates clean and separate layout from content
+# - Organize code with functions for database handling
 # --------------------------------------------
